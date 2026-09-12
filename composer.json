@@ -1,0 +1,15 @@
+{
+  "name": "request-inspector/development",
+  "description": "Development tools for Request Inspector",
+  "license": "GPL-2.0-or-later",
+  "require-dev": {
+    "wp-coding-standards/wpcs": "^3.2",
+    "phpcompatibility/phpcompatibility-wp": "^2.1",
+    "phpunit/phpunit": "^10.5",
+    "phpstan/phpstan": "^2.1",
+    "szepeviktor/phpstan-wordpress": "^2.0",
+    "wp-cli/wp-cli": "^2.12"
+  },
+  "config": {"allow-plugins": {"dealerdirect/phpcodesniffer-composer-installer": true}},
+  "scripts": {"test": "phpunit", "lint": "phpcs", "analyse": "phpstan analyse --memory-limit=512M"}
+}

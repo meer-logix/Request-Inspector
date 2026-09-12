@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog | WordPress Request Inspector</title>
+<meta name="description" content="Release history for WordPress Request Inspector — new inspector tabs, performance improvements, and security fixes, version by version.">
+<link rel="canonical" href="https://requestinspector.netlify.app/changelog.html">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Changelog — WordPress Request Inspector">
+<meta property="og:description" content="Release history and version notes for WordPress Request Inspector.">
+<meta property="og:url" content="https://requestinspector.netlify.app/changelog.html">
+<meta property="og:image" content="https://requestinspector.netlify.app/assets/img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/logo.png" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0B1B2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="utility-bar"><div class="container">
+  <span class="breadcrumb"><a href="index.html">requestinspector.netlify.app</a> / <b>Changelog</b></span>
+  <div class="util-right"><span class="recording-pill"><span class="pulse-dot"></span> Recording: ON</span><span class="env-tag">WP 6.4+ · PHP 8.0–8.3</span><a href="docs.html">Docs</a></div>
+</div></div>
+<header class="site-header"><div class="container nav-row">
+  <a href="index.html" class="brand"><img src="assets/img/logo.png" alt="" class="brand-mark" width="36" height="36"><span>Request Inspector<br><small>by Hammad Meer</small></span></a>
+  <nav class="main-nav" aria-label="Primary"><a href="features.html">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html">Blog</a><a href="changelog.html" class="active">Changelog</a><a href="developer.html">Developer</a></nav>
+  <div class="nav-cta"><a href="contact.html" class="btn btn-ghost btn-sm">Contact</a><a href="download.html" class="btn btn-primary btn-sm">Get the plugin</a><button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button></div>
+</div>
+<nav class="mobile-nav" aria-label="Mobile"><a href="features.html">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html">Blog</a><a href="changelog.html">Changelog</a><a href="developer.html">Developer</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow"><span class="dot"></span> Release notes</span>
+      <h1>Changelog</h1>
+      <p>Every release, what changed, and why.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow prose">
+
+      <h2 style="display:flex;align-items:center;gap:10px;">v0.10.2 <span class="badge-soft">Current</span></h2>
+      <p class="post-meta" style="margin-bottom:14px;">Latest release</p>
+      <ul>
+        <li>Fixes to duplicate-query grouping in the Database Inspector when caching plugins rewrite query hashes.</li>
+        <li>Hooks Inspector: corrected priority-badge sort order for negative priorities.</li>
+        <li>Reduced tracing overhead on REST-heavy requests by batching hook capture writes.</li>
+        <li>Security &amp; Redaction: added <code class="mono">client_secret</code> to the default redaction list.</li>
+      </ul>
+
+      <h2>v0.10.0</h2>
+      <ul>
+        <li>Added the Timeline / Waterfall tab with zoom controls and cross-tab deep links.</li>
+        <li>New adaptive 10% sampling mode for high-traffic production sites.</li>
+        <li>Introduced the immutable audit log for Security &amp; Redaction actions.</li>
+      </ul>
+
+      <h2>v0.9.0</h2>
+      <ul>
+        <li>PHP / Error Inspector: added 5-frame backtrace with memory delta per frame.</li>
+        <li>Component-level capture toggles (per-plugin) added to Recording &amp; Retention.</li>
+        <li>Storage usage gauge added to the Settings screen.</li>
+      </ul>
+
+      <h2>v0.8.0</h2>
+      <ul>
+        <li>First release of the Response Inspector: request/response body viewer with JSON syntax highlighting.</li>
+        <li>"Save as Fixture" action added for response payloads.</li>
+      </ul>
+
+      <h2>v0.7.0</h2>
+      <ul>
+        <li>Initial public build: Request Explorer, Database Inspector, and Hooks Inspector.</li>
+        <li>In-memory redaction engine for Authorization headers and cookies shipped by default.</li>
+      </ul>
+
+      <div class="callout">Following semantic versioning. Breaking changes to stored-data schemas will always ship as a major version bump with a migration note here.</div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="brand" style="color:#fff;"><img src="assets/img/logo.png" alt="" width="36" height="36"><span>Request Inspector</span></a><p>A native wp-admin observability suite for tracing requests, queries, hooks and PHP errors — without an external APM.</p></div>
+      <div class="footer-col"><h4>Product</h4><ul><li><a href="features.html">Features</a></li><li><a href="security.html">Security &amp; redaction</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="download.html">Download</a></li></ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul><li><a href="docs.html">Documentation</a></li><li><a href="blog.html">Blog</a></li><li><a href="blog-request-inspector-vs-query-monitor.html">vs. Query Monitor</a></li><li><a href="/docs.html#faq">FAQ</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="developer.html">Developer</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year"></span> WordPress Request Inspector. Released under the GPLv2 (or later) license.</span><span class="credit">Made with <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.9-10-9.1C.4 8.6 2 5 5.6 5c2 0 3.3 1 4.4 2.4C11.1 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.9 19.5 16.1 12 21 12 21z"/></svg> by <a href="developer.html">Hammad Meer</a></span></div>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WordPress Request Inspector — See Every Request, Query &amp; Hook in wp-admin</title>
+<meta name="description" content="WordPress Request Inspector is a native wp-admin debugging plugin that traces requests, SQL queries, hooks, HTTP calls and PHP errors in a Chrome DevTools-style inspector — under 2ms overhead, built-in redaction.">
+<link rel="canonical" href="https://requestinspector.netlify.app/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="author" content="Hammad Meer">
+<meta name="keywords" content="WordPress debugging plugin, WordPress request inspector, Query Monitor alternative, WordPress SQL query profiler, WordPress hooks debugger, WordPress REST API debugging, WordPress performance profiling, wp-admin developer tools">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="WordPress Request Inspector">
+<meta property="og:title" content="WordPress Request Inspector — See Every Request, Query & Hook in wp-admin">
+<meta property="og:description" content="A native wp-admin debugging suite: request explorer, SQL profiler, hooks tracer, PHP error inspector and a request waterfall — with built-in secret redaction. Under 2ms overhead.">
+<meta property="og:url" content="https://requestinspector.netlify.app/">
+<meta property="og:image" content="https://requestinspector.netlify.app/assets/img/logo.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="WordPress Request Inspector — See Every Request, Query & Hook in wp-admin">
+<meta name="twitter:description" content="Chrome-DevTools-style debugging, natively inside wp-admin. Requests, SQL, hooks, HTTP calls, PHP errors and a full waterfall — under 2ms overhead.">
+<meta name="twitter:image" content="https://requestinspector.netlify.app/assets/img/logo.png">
+
+<link rel="icon" href="assets/img/logo.png" sizes="any">
+<link rel="icon" href="assets/img/logo.png" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/logo.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0B1B2E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "WordPress Request Inspector",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "WordPress 6.0+",
+      "url": "https://requestinspector.netlify.app/",
+      "image": "https://requestinspector.netlify.app/assets/img/og-image.png",
+      "description": "A native wp-admin debugging and observability plugin that inspects HTTP requests, SQL queries, hook execution, external HTTP calls and PHP errors with a Chrome DevTools-style waterfall view.",
+      "softwareVersion": "0.10.2",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Hammad Meer",
+        "url": "https://requestinspector.netlify.app/developer.html"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "37"
+      }
+    },
+    {
+      "@type": "Organization",
+      "name": "WordPress Request Inspector",
+      "url": "https://requestinspector.netlify.app/",
+      "logo": "https://requestinspector.netlify.app/assets/img/icon-512.png",
+      "founder": { "@type": "Person", "name": "Hammad Meer" }
+    },
+    {
+      "@type": "WebSite",
+      "name": "WordPress Request Inspector",
+      "url": "https://requestinspector.netlify.app/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://requestinspector.netlify.app/docs.html?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="utility-bar">
+  <div class="container">
+    <span class="breadcrumb"><b>requestinspector.netlify.app</b> / Home</span>
+    <div class="util-right">
+      <span class="recording-pill"><span class="pulse-dot"></span> Recording: ON</span>
+      <span class="env-tag">WP 6.4+ · PHP 8.0–8.3</span>
+      <a href="docs.html">Docs</a>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container nav-row">
+    <a href="index.html" class="brand">
+      <img src="assets/img/logo.png" alt="" class="brand-mark" width="36" height="36">
+      <span>Request Inspector<br><small>by Hammad Meer</small></span>
+    </a>
+    <nav class="main-nav" aria-label="Primary">
+      <a href="features.html">Features</a>
+      <a href="security.html">Security</a>
+      <a href="docs.html">Docs</a>
+      <a href="blog.html">Blog</a>
+      <a href="changelog.html">Changelog</a>
+      <a href="developer.html">Developer</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="contact.html" class="btn btn-ghost btn-sm">Contact</a>
+      <a href="download.html" class="btn btn-primary btn-sm">Get the plugin</a>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
+    </div>
+  </div>
+  <nav class="mobile-nav" aria-label="Mobile">
+    <a href="features.html">Features</a>
+    <a href="security.html">Security</a>
+    <a href="docs.html">Docs</a>
+    <a href="blog.html">Blog</a>
+    <a href="changelog.html">Changelog</a>
+    <a href="developer.html">Developer</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow"><span class="dot"></span> Native wp-admin observability</span>
+        <h1>See exactly what<br>your WordPress site<br><em>is doing.</em></h1>
+        <p class="lead">Request Inspector traces every request, database query, hook, outbound HTTP call and PHP error — in one Chrome DevTools-style panel built right into wp-admin. No external APM, no guesswork.</p>
+        <div class="hero-actions">
+          <a href="download.html" class="btn btn-primary">Install the plugin</a>
+          <a href="features.html" class="btn btn-on-dark">See it in action</a>
+        </div>
+        <div class="hero-meta">
+          <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg> &lt;2ms tracing overhead</span>
+          <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg> 9-tab request inspector</span>
+          <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 6v6c0 5 4 8 9 10 5-2 9-5 9-10V6z"/></svg> Redaction built in</span>
+        </div>
+      </div>
+
+      <div class="inspector-stage">
+        <div class="inspector-panel">
+          <div class="panel-titlebar"><i class="r"></i><i class="y"></i><i class="g"></i><span>Request Inspector — Request Explorer</span></div>
+          <div class="panel-tabs">
+            <span class="on">Overview</span><span>Request</span><span>Response</span><span>Database</span><span>Hooks</span><span>HTTP API</span><span>PHP</span><span>Timeline</span>
+          </div>
+          <div class="panel-body">
+            <div class="req-row active">
+              <span class="method post">POST</span>
+              <span class="req-url">/wp-json/analytify/v1/report</span>
+              <span class="status s2">200</span>
+              <span class="dur">342ms</span>
+            </div>
+            <div class="req-row">
+              <span class="method get">GET</span>
+              <span class="req-url">/wp-json/wc/v3/products?page=2</span>
+              <span class="status s2">200</span>
+              <span class="dur slow">812ms</span>
+            </div>
+            <div class="req-row">
+              <span class="method get">GET</span>
+              <span class="req-url">/wp-admin/admin-ajax.php?action=cart</span>
+              <span class="status s3">301</span>
+              <span class="dur">58ms</span>
+            </div>
+            <div class="req-row">
+              <span class="method put">PUT</span>
+              <span class="req-url">/wp-json/wp/v2/posts/482</span>
+              <span class="status s5">500</span>
+              <span class="dur">129ms</span>
+            </div>
+            <div class="panel-divider"></div>
+            <div class="panel-json">{
+  <span class="k">"route"</span>: <span class="s">"/wp-json/analytify/v1/report"</span>,
+  <span class="k">"queries"</span>: <span class="n">214</span>,
+  <span class="k">"hooks_fired"</span>: <span class="n">1893</span>,
+  <span class="k">"peak_memory"</span>: <span class="s">"4.8 MB"</span>,
+  <span class="k">"auth"</span>: <span class="muted-tok">"Bearer ████████"</span>
+}</div>
+            <div class="waterfall-row"><span class="wf-label">plugins_loaded</span><div class="wf-track"><div class="wf-fill" style="width:20%;background:#47BEFE"></div></div></div>
+            <div class="waterfall-row"><span class="wf-label">init</span><div class="wf-track"><div class="wf-fill" style="width:35%;background:#0F62A8"></div></div></div>
+            <div class="waterfall-row"><span class="wf-label">rest_api_init</span><div class="wf-track"><div class="wf-fill" style="width:68%;background:#F7BF54"></div></div></div>
+            <div class="waterfall-row"><span class="wf-label">shutdown</span><div class="wf-track"><div class="wf-fill" style="width:12%;background:#2FAE60"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stat-strip">
+    <div class="container">
+      <div class="stat-item"><b>&lt;2.0ms</b><span>per-request overhead</span></div>
+      <div class="stat-item"><b>9</b><span>request inspector tabs</span></div>
+      <div class="stat-item"><b>10+</b><span>redacted secret patterns</span></div>
+      <div class="stat-item"><b>GPL</b><span>licensed &amp; self-hosted</span></div>
+    </div>
+  </div>
+
+  <!-- WHY -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow"><span class="dot"></span> Why developers reach for it</span>
+        <h2>Query Monitor tells you something is slow. Request Inspector shows you the whole request.</h2>
+        <p>Instead of piecing together a page's behavior from four different tools, Request Inspector gives you one inspector — the request, the response body, every SQL statement, every hook callback, every outbound HTTP call and every PHP notice — laid out the way Chrome DevTools lays out a network request.</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div>
+          <h3>Request Explorer</h3>
+          <p>Every REST call, AJAX action, cron run, WP-CLI command and front-end render logged in one filterable table — method, route, status, duration, payload size, initiating plugin.</p>
+          <span class="tag">screen 1</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div>
+          <h3>Database Inspector</h3>
+          <p>Every query with duration, affected rows, caller file:line, duplicate-query grouping and an inline <code class="mono">EXPLAIN</code> breakdown — no more guessing which plugin fired 40 duplicate queries.</p>
+          <span class="tag">screen 4</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 7v6c0 5 3.5 8.5 9 9 5.5-.5 9-4 9-9V7z"/></svg></div>
+          <h3>Hooks Inspector</h3>
+          <p>See every <code class="mono">do_action()</code> and <code class="mono">apply_filters()</code> call in execution order, grouped by lifecycle, with per-callback timing and priority — flagged the moment a callback crosses 5ms or 20ms.</p>
+          <span class="tag">screen 5</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9.2a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V13"/><path d="m16 19 2 2 4-4"/></svg></div>
+          <h3>PHP / Error Inspector</h3>
+          <p>Fatals, warnings, deprecations and notices with the surrounding source snippet, a five-frame backtrace, and memory delta per frame — right where the error happened.</p>
+          <span class="tag">screen 6</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h10M7 12h6"/></svg></div>
+          <h3>Timeline / Waterfall</h3>
+          <p>A millisecond-accurate Gantt view of <code class="mono">muplugins_loaded</code> through <code class="mono">shutdown</code>, with zoom, layer toggles, and one-click jumps into the Database or Hooks tab for any segment.</p>
+          <span class="tag">screen 7</span>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h3>Security &amp; Redaction</h3>
+          <p>Bearer tokens, passwords, cookies and nonces are masked <em>in memory</em>, before anything is written to disk — with an IP allowlist, capability gate, and immutable audit log for enterprise teams.</p>
+          <span class="tag">screens 3 &amp; 9</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEEP DIVE: Database -->
+  <section class="section section--dark">
+    <div class="container">
+      <div class="deepdive">
+        <div>
+          <span class="eyebrow"><span class="dot"></span> Database Inspector</span>
+          <h2>Find the query that's actually slowing you down.</h2>
+          <p>Total query time, slow-query counts and duplicate-query groups are surfaced automatically. Click any row for the full statement, an <code class="mono">EXPLAIN</code> analysis, and the exact caller — file, function, and line.</p>
+          <ul class="checklist">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m20 6-11 11L4 12"/></svg> Duplicate-query grouping (×N badges) exposes redundant plugin queries instantly</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m20 6-11 11L4 12"/></svg> Inline <code class="mono">EXPLAIN</code>: access type, rows examined, key used, table-scan warnings</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m20 6-11 11L4 12"/></svg> Full caller backtrace — know which plugin or theme file to fix</li>
+          </ul>
+        </div>
+        <div class="dark-card">
+          <table class="mini-table">
+            <thead><tr><th>#</th><th>Query</th><th>Time</th><th>Caller</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>SELECT * FROM wp_postmeta WHERE...</td><td style="color:#F7BF54">61ms</td><td>woocommerce/includes/class-wc-ajax.php:412</td></tr>
+              <tr><td>2</td><td>SELECT option_value FROM wp_options...</td><td>4ms</td><td>analytify/core/loader.php:88 <span class="badge-dup">×4 dup</span></td></tr>
+              <tr><td>3</td><td>UPDATE wp_posts SET post_content...</td><td>9ms</td><td>wp-includes/post.php:3980</td></tr>
+              <tr><td>4</td><td>SELECT * FROM wp_usermeta WHERE...</td><td style="color:#D64545">184ms</td><td>plugin-x/user-sync.php:57</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEEP DIVE: hooks + settings -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="deepdive reverse">
+        <div>
+          <span class="eyebrow"><span class="dot"></span> Recording &amp; retention</span>
+          <h2>Safe to run on production, by design.</h2>
+          <p>Sample at 100%, "slow &amp; errors only", or an adaptive 10% — with per-component capture toggles for WooCommerce, page builders, or any plugin generating noise. FIFO pruning keeps storage under your cap automatically.</p>
+          <ul class="checklist">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m20 6-11 11L4 12"/></svg> Retention windows of 7, 14 or 30 days with a hard storage ceiling</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m20 6-11 11L4 12"/></svg> Auto-disables unless <code class="mono">WP_DEBUG</code> is on, or an admin explicitly enables it</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m20 6-11 11L4 12"/></svg> Gated to <code class="mono">manage_options</code>, with an optional IP allowlist</li>
+          </ul>
+          <a href="security.html" class="btn btn-ghost btn-sm" style="margin-top:8px;">Read the security model</a>
+        </div>
+        <div class="dark-card" style="background:var(--white); border-color:var(--border);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <strong style="font-family:var(--font-mono);font-size:.8rem;">Storage usage</strong>
+            <span class="badge-soft">48.2 MB / 250 MB</span>
+          </div>
+          <div class="wf-track" style="height:10px;margin-bottom:20px;"><div class="wf-fill" style="width:19%;background:var(--primary)"></div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.85rem;color:var(--muted);">
+            <div>Sampling<br><strong style="color:var(--ink)">Slow &amp; errors only</strong></div>
+            <div>Retention<br><strong style="color:var(--ink)">14 days</strong></div>
+            <div>Max records<br><strong style="color:var(--ink)">5,000</strong></div>
+            <div>Redaction<br><strong style="color:var(--success)">Active</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON TEASER -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow"><span class="dot"></span> vs. Query Monitor</span>
+        <h2>The response body is the difference.</h2>
+        <p>Query Monitor is a great panel for hooks and queries. It doesn't show you the actual request payload or response body. Request Inspector does — with formatted JSON, headers, and redaction on both sides of the wire.</p>
+      </div>
+      <div class="compare-wrap">
+        <table class="compare">
+          <thead>
+            <tr><th>Capability</th><th class="hl">Request Inspector</th><th>Query Monitor</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>Full request &amp; response body viewer</th><td class="yes">Yes</td><td class="no">No</td></tr>
+            <tr><th>Chrome DevTools-style waterfall</th><td class="yes">Yes</td><td class="partial">Partial timing panel</td></tr>
+            <tr><th>SQL query profiling + EXPLAIN</th><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><th>Hook/callback execution tracing</th><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><th>Built-in secret redaction</th><td class="yes">Yes</td><td class="no">No</td></tr>
+            <tr><th>IP allowlist + audit log</th><td class="yes">Yes</td><td class="no">No</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-center mt-40">
+        <a href="blog-request-inspector-vs-query-monitor.html" class="btn btn-primary">Read the full comparison</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PERSONAS -->
+  <section class="section section--tint">
+    <div class="container">
+      <div class="section-head center">
+        <span class="eyebrow"><span class="dot"></span> Built for</span>
+        <h2>Whoever has to answer "why is this slow?"</h2>
+      </div>
+      <div class="persona-grid">
+        <div class="persona-card">
+          <span class="role">Plugin &amp; theme developers</span>
+          <h3>Ship with confidence</h3>
+          <p>See precisely how your code executes across REST endpoints, AJAX handlers and template rendering — before a client finds the bug.</p>
+        </div>
+        <div class="persona-card">
+          <span class="role">Agency engineers &amp; SREs</span>
+          <h3>Audit third-party plugins fast</h3>
+          <p>Point it at a client site, find the slow query or the misbehaving hook, and hand back a concrete fix instead of a guess.</p>
+        </div>
+        <div class="persona-card">
+          <span class="role">Enterprise DevOps</span>
+          <h3>Profile production safely</h3>
+          <p>RBAC, IP allowlisting, and a &lt;2ms overhead guarantee mean profiling doesn't have to wait for a maintenance window.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAKER -->
+  <section class="section">
+    <div class="container">
+      <div class="maker-card">
+        <div class="maker-avatar">HM</div>
+        <div>
+          <span class="badge-soft" style="background:rgba(71,190,254,.14); color:#47BEFE;">Made by an independent developer</span>
+          <h3 style="margin-top:12px;">Built by Hammad Meer</h3>
+          <p>A MERN-stack &amp; full-stack developer who builds fast, secure, practical tools — Request Inspector grew out of one question asked on too many client sites: <em>"okay, but what is it actually doing?"</em></p>
+        </div>
+        <a href="developer.html" class="btn btn-on-dark">Meet the developer</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-band">
+    <div class="container-narrow">
+      <h2>Stop debugging WordPress in the dark.</h2>
+      <p>Install Request Inspector, flip recording on, and see your very next request — request, response, queries, hooks and all.</p>
+      <div class="hero-actions" style="justify-content:center;">
+        <a href="download.html" class="btn btn-primary">Install the plugin</a>
+        <a href="docs.html" class="btn btn-on-dark">Read the docs</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" style="color:#fff;">
+          <img src="assets/img/logo.png" alt="" width="36" height="36">
+          <span>Request Inspector</span>
+        </a>
+        <p>A native wp-admin observability suite for tracing requests, queries, hooks and PHP errors — without an external APM.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="security.html">Security &amp; redaction</a></li>
+          <li><a href="changelog.html">Changelog</a></li>
+          <li><a href="download.html">Download</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="docs.html">Documentation</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="blog-request-inspector-vs-query-monitor.html">vs. Query Monitor</a></li>
+          <li><a href="/docs.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="developer.html">Developer</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> WordPress Request Inspector. Released under the GPLv2 (or later) license.</span>
+      <span class="credit">Made with <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.9-10-9.1C.4 8.6 2 5 5.6 5c2 0 3.3 1 4.4 2.4C11.1 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.9 19.5 16.1 12 21 12 21z"/></svg> by <a href="developer.html">Hammad Meer</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

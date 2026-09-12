@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Read a Request Waterfall Like a DevTools Pro</title>
+<meta name="description" content="What each phase in the WordPress Request Inspector Timeline tab means, from muplugins_loaded to shutdown, and which shapes actually indicate a problem.">
+<link rel="canonical" href="https://requestinspector.netlify.app/blog-reading-a-request-waterfall.html">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Hammad Meer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Read a Request Waterfall Like a DevTools Pro">
+<meta property="og:description" content="What each phase in a WordPress request timeline means, and which shapes actually indicate a problem.">
+<meta property="og:url" content="https://requestinspector.netlify.app/blog-reading-a-request-waterfall.html">
+<meta property="og:image" content="https://requestinspector.netlify.app/assets/img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/logo.png" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0B1B2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How to Read a Request Waterfall Like a DevTools Pro",
+  "author": {"@type": "Person", "name": "Hammad Meer", "url": "https://requestinspector.netlify.app/developer.html"},
+  "publisher": {"@type": "Organization", "name": "WordPress Request Inspector", "logo": {"@type":"ImageObject","url":"https://requestinspector.netlify.app/assets/img/icon-512.png"}},
+  "datePublished": "2026-09-02",
+  "dateModified": "2026-09-02",
+  "mainEntityOfPage": "https://requestinspector.netlify.app/blog-reading-a-request-waterfall.html",
+  "image": "https://requestinspector.netlify.app/assets/img/og-image.png"
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="utility-bar"><div class="container">
+  <span class="breadcrumb"><a href="index.html">requestinspector.netlify.app</a> / <a href="blog.html">Blog</a> / <b>Reading a waterfall</b></span>
+  <div class="util-right"><span class="recording-pill"><span class="pulse-dot"></span> Recording: ON</span><a href="docs.html">Docs</a></div>
+</div></div>
+<header class="site-header"><div class="container nav-row">
+  <a href="index.html" class="brand"><img src="assets/img/logo.png" alt="" class="brand-mark" width="36" height="36"><span>Request Inspector<br><small>by Hammad Meer</small></span></a>
+  <nav class="main-nav" aria-label="Primary"><a href="features.html">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html" class="active">Blog</a><a href="changelog.html">Changelog</a><a href="developer.html">Developer</a></nav>
+  <div class="nav-cta"><a href="contact.html" class="btn btn-ghost btn-sm">Contact</a><a href="download.html" class="btn btn-primary btn-sm">Get the plugin</a><button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button></div>
+</div>
+<nav class="mobile-nav" aria-label="Mobile"><a href="features.html">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html">Blog</a><a href="changelog.html">Changelog</a><a href="developer.html">Developer</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container-narrow">
+      <span class="eyebrow"><span class="dot"></span> Fundamentals</span>
+      <h1>How to read a request waterfall like a DevTools pro</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow prose">
+      <div class="byline"><div class="byline-avatar">HM</div><div><b>Hammad Meer</b><span>Published Sep 2, 2026 · 7 min read</span></div></div>
+
+      <p>Browser developers already know how to read a network waterfall. A WordPress request lifecycle waterfall uses the same visual grammar — but the phases mean something different. Here's a phase-by-phase primer.</p>
+
+      <div class="dark-card" style="margin:24px 0;">
+        <div class="waterfall-row"><span class="wf-label">muplugins_loaded</span><div class="wf-track"><div class="wf-fill" style="width:8%;background:#47BEFE"></div></div></div>
+        <div class="waterfall-row"><span class="wf-label">plugins_loaded</span><div class="wf-track"><div class="wf-fill" style="width:22%;background:#0F62A8"></div></div></div>
+        <div class="waterfall-row"><span class="wf-label">init</span><div class="wf-track"><div class="wf-fill" style="width:34%;background:#0F3D6E"></div></div></div>
+        <div class="waterfall-row"><span class="wf-label">rest_api_init</span><div class="wf-track"><div class="wf-fill" style="width:71%;background:#F7BF54"></div></div></div>
+        <div class="waterfall-row"><span class="wf-label">rest_pre_dispatch</span><div class="wf-track"><div class="wf-fill" style="width:40%;background:#47BEFE"></div></div></div>
+        <div class="waterfall-row"><span class="wf-label">shutdown</span><div class="wf-track"><div class="wf-fill" style="width:10%;background:#2FAE60"></div></div></div>
+      </div>
+
+      <h2>muplugins_loaded</h2>
+      <p>Must-use plugins load first, before regular plugins. This phase should be tiny — a handful of milliseconds. If it's large, you likely have a must-use plugin doing expensive work far earlier than it needs to.</p>
+
+      <h2>plugins_loaded</h2>
+      <p>Every active plugin's main file executes here. This phase scales roughly with plugin count, so some size is normal — but a single plugin dominating it usually means synchronous work (like an external license check) that belongs later or behind a cache.</p>
+
+      <h2>init</h2>
+      <p>Post types, taxonomies, and most plugin setup logic register here. This is one of the busiest hooks in WordPress, so look at the Hooks tab filtered to <code class="mono">init</code> specifically rather than judging the phase as a block.</p>
+
+      <h2>rest_api_init / rest_pre_dispatch</h2>
+      <p>Only present on REST requests. This is where route registration and permission callbacks run — a spike here (like the amber bar above) is a strong signal to open the Hooks tab and look for a permission callback doing a database or remote call on every single request.</p>
+
+      <h2>template_redirect / the render phase</h2>
+      <p>On front-end page loads (not shown above, since this example is a REST call), this is where the theme actually queries and renders content. Page builders and heavy widget logic tend to show up here as a wide phase with many nested database sub-bars.</p>
+
+      <h2>shutdown</h2>
+      <p>Runs after the response has already been sent in most cases — logging, cache warming, deferred jobs. It should almost never be large enough to affect perceived response time, but a bloated shutdown hook can still hold a PHP worker busy longer than necessary under load.</p>
+
+      <h2>Shapes worth recognizing</h2>
+      <ul>
+        <li><strong>One clearly dominant phase</strong> — the normal, easy case. Deep-link into it and look at queries or hooks for that phase specifically.</li>
+        <li><strong>Many small, evenly-sized phases</strong> — often means death by a thousand cuts: lots of plugins each doing a little bit of work. Harder to fix with one change; look for the few worst offenders in the Hooks tab across the whole request.</li>
+        <li><strong>A late spike with nothing obviously heavy before it</strong> — check the HTTP API tab; this shape is a classic sign of a blocking outbound HTTP call.</li>
+      </ul>
+
+      <div class="divider"></div>
+      <div class="text-center"><a href="features.html" class="btn btn-primary">See the Timeline tab in the feature tour</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="brand" style="color:#fff;"><img src="assets/img/logo.png" alt="" width="36" height="36"><span>Request Inspector</span></a><p>A native wp-admin observability suite for tracing requests, queries, hooks and PHP errors — without an external APM.</p></div>
+      <div class="footer-col"><h4>Product</h4><ul><li><a href="features.html">Features</a></li><li><a href="security.html">Security &amp; redaction</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="download.html">Download</a></li></ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul><li><a href="docs.html">Documentation</a></li><li><a href="blog.html">Blog</a></li><li><a href="blog-request-inspector-vs-query-monitor.html">vs. Query Monitor</a></li><li><a href="/docs.html#faq">FAQ</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="developer.html">Developer</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year"></span> WordPress Request Inspector. Released under the GPLv2 (or later) license.</span><span class="credit">Made with <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.9-10-9.1C.4 8.6 2 5 5.6 5c2 0 3.3 1 4.4 2.4C11.1 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.9 19.5 16.1 12 21 12 21z"/></svg> by <a href="developer.html">Hammad Meer</a></span></div>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

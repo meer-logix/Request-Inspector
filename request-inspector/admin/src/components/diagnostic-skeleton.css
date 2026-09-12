@@ -1,0 +1,39 @@
+.ri-placeholder { width: 100%; min-width: 0; color: inherit; background: transparent; }
+.ri-placeholder-bar, .ri-placeholder-control, .ri-placeholder-badge, .ri-placeholder-span { display: block; border-radius: 5px; background: #dfe7ee; animation: ri-placeholder-pulse 1.6s ease-in-out infinite alternate; }
+.ri-placeholder-bar { height: 12px; width: 100%; }
+.ri-placeholder-heading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 18px; min-height: 28px; }
+.ri-placeholder-heading > .ri-placeholder-bar { width: 180px; max-width: 55%; height: 22px; }
+.ri-placeholder-badge { width: 65px; height: 24px; border-radius: 20px; }
+.ri-placeholder-route { display: grid; grid-template-columns: 42px minmax(0,1fr) 36px; gap: 12px; padding: 14px 10px; background: #fff; border: 1px solid #d8e1ea; border-radius: 6px; }
+.ri-placeholder-cards { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; margin: 16px 0; }
+.ri-placeholder-card { padding: 14px; background: #fff; border: 1px solid #d8e1ea; border-radius: 6px; }
+.ri-placeholder-label { width: 70%; height: 10px; }
+.ri-placeholder-value { width: 65%; height: 25px; margin-top: 12px; }
+.ri-placeholder-facts > div { display: grid; grid-template-columns: minmax(100px,25%) minmax(0,1fr); gap: 12px; padding: 13px 0; border-bottom: 1px solid #e5ebf0; }
+.ri-placeholder-facts > div > :last-child { width: 75%; }
+.ri-placeholder-filters { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0; }
+.ri-placeholder-filters > div { flex: 1 1 100px; max-width: 220px; }
+.ri-placeholder-control { height: 36px; margin-top: 6px; border: 1px solid #d8e1ea; }
+.ri-placeholder-table { overflow: hidden; border: 1px solid #d8e1ea; border-radius: 6px; background: #fff; }
+.ri-placeholder-table-head, .ri-placeholder-table-row { display: grid; grid-template-columns: 30px 55px minmax(70px,2fr) repeat(4,minmax(30px,1fr)); align-items: center; gap: 16px; padding: 16px 12px; }
+.ri-placeholder-table-head { background: #f0f3f6; }
+.ri-placeholder-table-row { border-top: 1px solid #e5ebf0; }
+.ri-placeholder-form { padding: 18px; border: 1px solid #d8e1ea; border-radius: 6px; background: #fff; display: grid; gap: 22px; }
+.ri-placeholder-form > div { max-width: 560px; }
+.ri-placeholder-form .ri-placeholder-label { width: 140px; }
+.ri-placeholder-events > div { display: grid; grid-template-columns: minmax(0,1fr) 20% 12%; gap: 12px; padding: 16px 14px; margin: 8px 0; border: 1px solid #d8e1ea; border-radius: 5px; background: #fff; }
+.ri-placeholder-timeline > div { display: grid; grid-template-columns: minmax(110px,35%) 1fr 70px; gap: 10px; align-items: center; padding: 12px 4px; }
+.ri-placeholder-span-0 { width: 90%; height: 12px; }
+.ri-placeholder-span-1 { width: 55%; margin-inline-start: 10%; height: 12px; }
+.ri-placeholder-span-2 { width: 30%; margin-inline-start: 45%; height: 12px; }
+.ri-placeholder-code { padding: 18px; background: #f0f3f6; display: grid; gap: 14px; border-radius: 6px; }
+.ri-placeholder-code > :nth-child(even) { width: 70%; margin-inline-start: 4%; }
+#ri-live-inspector-root .rid-side .ri-placeholder-cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
+@keyframes ri-placeholder-pulse { to { opacity: .45; } }
+@media (max-width: 1000px) { .ri-placeholder-cards { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 782px) {
+  #ri-live-inspector-root .ri-placeholder-cards { grid-template-columns: 1fr; }
+  #ri-live-inspector-root .ri-placeholder-facts > div { grid-template-columns: 1fr; gap: 8px; }
+  .ri-placeholder-table-head, .ri-placeholder-table-row { gap: 8px; padding: 14px 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .ri-placeholder * { animation: none; } }

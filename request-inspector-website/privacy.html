@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy | WordPress Request Inspector</title>
+<meta name="description" content="How WordPress Request Inspector handles data: self-hosted storage, in-memory redaction, and what this marketing site collects.">
+<link rel="canonical" href="https://requestinspector.netlify.app/privacy.html">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/logo.png" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0B1B2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="utility-bar"><div class="container">
+  <span class="breadcrumb"><a href="index.html">requestinspector.netlify.app</a> / <b>Privacy</b></span>
+  <div class="util-right"><span class="recording-pill"><span class="pulse-dot"></span> Recording: ON</span><a href="docs.html">Docs</a></div>
+</div></div>
+<header class="site-header"><div class="container nav-row">
+  <a href="index.html" class="brand"><img src="assets/img/logo.png" alt="" class="brand-mark" width="36" height="36"><span>Request Inspector<br><small>by Hammad Meer</small></span></a>
+  <nav class="main-nav" aria-label="Primary"><a href="features.html">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html">Blog</a><a href="changelog.html">Changelog</a><a href="developer.html">Developer</a></nav>
+  <div class="nav-cta"><a href="contact.html" class="btn btn-ghost btn-sm">Contact</a><a href="download.html" class="btn btn-primary btn-sm">Get the plugin</a><button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button></div>
+</div>
+<nav class="mobile-nav" aria-label="Mobile"><a href="features.html">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html">Blog</a><a href="changelog.html">Changelog</a><a href="developer.html">Developer</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container"><span class="eyebrow"><span class="dot"></span> Legal</span><h1>Privacy Policy</h1><p>Last updated September 2026.</p></div>
+  </section>
+  <section class="section">
+    <div class="container-narrow prose">
+      <h2>The plugin</h2>
+      <p>WordPress Request Inspector is self-hosted software. All captured telemetry — requests, SQL queries, hooks, HTTP calls and PHP errors — is stored in your own WordPress database. Nothing is transmitted to Hammad Meer, to this website, or to any third party.</p>
+      <p>Sensitive values (Authorization headers, passwords, tokens, cookies, nonces) are redacted in memory before storage, per the <a href="security.html">security model</a>. Retention and storage caps are configurable in Settings, with automatic pruning.</p>
+
+      <h2>This website</h2>
+      <p>This marketing and documentation site (requestinspector.netlify.app) is a static site hosted on Netlify. It does not use tracking cookies or third-party advertising scripts. If you submit the contact form, the information you provide is used only to respond to your enquiry.</p>
+      <p>Standard hosting logs (IP address, user agent, request timestamp) may be retained by Netlify per their own hosting policies, independent of this plugin.</p>
+
+      <h2>Changes</h2>
+      <p>This policy may be updated as the plugin or site evolve. Material changes will be reflected here with an updated date.</p>
+
+      <h2>Contact</h2>
+      <p>Questions about this policy can be sent via the <a href="contact.html">contact page</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="brand" style="color:#fff;"><img src="assets/img/logo.png" alt="" width="36" height="36"><span>Request Inspector</span></a><p>A native wp-admin observability suite for tracing requests, queries, hooks and PHP errors — without an external APM.</p></div>
+      <div class="footer-col"><h4>Product</h4><ul><li><a href="features.html">Features</a></li><li><a href="security.html">Security &amp; redaction</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="download.html">Download</a></li></ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul><li><a href="docs.html">Documentation</a></li><li><a href="blog.html">Blog</a></li><li><a href="blog-request-inspector-vs-query-monitor.html">vs. Query Monitor</a></li><li><a href="/docs.html#faq">FAQ</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="developer.html">Developer</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year"></span> WordPress Request Inspector. Released under the GPLv2 (or later) license.</span><span class="credit">Made with <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.9-10-9.1C.4 8.6 2 5 5.6 5c2 0 3.3 1 4.4 2.4C11.1 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.9 19.5 16.1 12 21 12 21z"/></svg> by <a href="developer.html">Hammad Meer</a></span></div>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

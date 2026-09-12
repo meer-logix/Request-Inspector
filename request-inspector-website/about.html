@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About | WordPress Request Inspector</title>
+<meta name="description" content="Why WordPress Request Inspector exists, what it's built to solve, and the developer behind it — Hammad Meer.">
+<link rel="canonical" href="https://requestinspector.netlify.app/about.html">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About — WordPress Request Inspector">
+<meta property="og:description" content="Why WordPress Request Inspector exists, and the developer behind it.">
+<meta property="og:url" content="https://requestinspector.netlify.app/about.html">
+<meta property="og:image" content="https://requestinspector.netlify.app/assets/img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/logo.png" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0B1B2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="utility-bar"><div class="container">
+  <span class="breadcrumb"><a href="index.html">requestinspector.netlify.app</a> / <b>About</b></span>
+  <div class="util-right"><span class="recording-pill"><span class="pulse-dot"></span> Recording: ON</span><span class="env-tag">WP 6.4+ · PHP 8.0–8.3</span><a href="docs.html">Docs</a></div>
+</div></div>
+<header class="site-header"><div class="container nav-row">
+  <a href="index.html" class="brand"><img src="assets/img/logo.png" alt="" class="brand-mark" width="36" height="36"><span>Request Inspector<br><small>by Hammad Meer</small></span></a>
+  <nav class="main-nav" aria-label="Primary"><a href="features.html">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html">Blog</a><a href="changelog.html">Changelog</a><a href="developer.html">Developer</a></nav>
+  <div class="nav-cta"><a href="contact.html" class="btn btn-ghost btn-sm">Contact</a><a href="download.html" class="btn btn-primary btn-sm">Get the plugin</a><button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button></div>
+</div>
+<nav class="mobile-nav" aria-label="Mobile"><a href="features.html">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html">Blog</a><a href="changelog.html">Changelog</a><a href="developer.html">Developer</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow"><span class="dot"></span> About</span>
+      <h1>Built to answer one question, properly.</h1>
+      <p>"What is this request actually doing?" — asked on enough client sites that it turned into a plugin.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow prose">
+      <h2>The problem</h2>
+      <p>Debugging a slow or misbehaving WordPress site usually means switching between four tools: a query profiler for the database, a hook inspector for plugin conflicts, a browser network tab for the actual HTTP traffic, and an error log for the PHP side. None of them share context, so you end up mentally stitching a timeline together from four unrelated screens.</p>
+
+      <h2>The approach</h2>
+      <p>WordPress Request Inspector takes the two things that already work well elsewhere — Query Monitor's deep WordPress execution context, and Chrome DevTools' request/response/waterfall model — and combines them into one native wp-admin panel. A single request opens into nine tabs: Overview, Request, Response, Headers, Database, Hooks, HTTP API, PHP, and Timeline. Everything about that request lives in one place.</p>
+
+      <h2>Who it's for</h2>
+      <ul>
+        <li><strong>Plugin and theme developers</strong> who need to see precisely how their code executes across REST endpoints, AJAX handlers and template rendering.</li>
+        <li><strong>Agency engineers and SREs</strong> auditing third-party plugin performance or chasing a TTFB regression on staging or production.</li>
+        <li><strong>Enterprise DevOps teams</strong> who need strict redaction, role-based access, and a guaranteed low runtime overhead before profiling is allowed anywhere near a live cluster.</li>
+      </ul>
+
+      <h2>What it isn't</h2>
+      <p>It isn't an external APM, and it doesn't send your data anywhere. Everything is captured and stored inside your own WordPress database, self-hosted, under your own retention and redaction rules.</p>
+
+      <div class="divider"></div>
+
+      <div class="maker-card" style="margin:0;">
+        <div class="maker-avatar">HM</div>
+        <div>
+          <h3>Made by Hammad Meer</h3>
+          <p>A MERN-stack and full-stack developer focused on fast, secure, practical software. Request Inspector is an independent project, built and maintained outside of any agency or company.</p>
+        </div>
+        <a href="developer.html" class="btn btn-on-dark">Full developer profile</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container-narrow">
+      <h2>See it running on your own site.</h2>
+      <div class="hero-actions" style="justify-content:center;"><a href="download.html" class="btn btn-primary">Install the plugin</a><a href="features.html" class="btn btn-on-dark">Tour the features</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="brand" style="color:#fff;"><img src="assets/img/logo.png" alt="" width="36" height="36"><span>Request Inspector</span></a><p>A native wp-admin observability suite for tracing requests, queries, hooks and PHP errors — without an external APM.</p></div>
+      <div class="footer-col"><h4>Product</h4><ul><li><a href="features.html">Features</a></li><li><a href="security.html">Security &amp; redaction</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="download.html">Download</a></li></ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul><li><a href="docs.html">Documentation</a></li><li><a href="blog.html">Blog</a></li><li><a href="blog-request-inspector-vs-query-monitor.html">vs. Query Monitor</a></li><li><a href="/docs.html#faq">FAQ</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="developer.html">Developer</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year"></span> WordPress Request Inspector. Released under the GPLv2 (or later) license.</span><span class="credit">Made with <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.9-10-9.1C.4 8.6 2 5 5.6 5c2 0 3.3 1 4.4 2.4C11.1 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.9 19.5 16.1 12 21 12 21z"/></svg> by <a href="developer.html">Hammad Meer</a></span></div>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

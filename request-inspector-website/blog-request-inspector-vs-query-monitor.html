@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WordPress Request Inspector vs. Query Monitor: The Full Comparison</title>
+<meta name="description" content="A detailed, honest comparison of WordPress Request Inspector and Query Monitor — request/response inspection, SQL profiling, hooks tracing, redaction, and which to use when.">
+<link rel="canonical" href="https://requestinspector.netlify.app/blog-request-inspector-vs-query-monitor.html">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Hammad Meer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WordPress Request Inspector vs. Query Monitor: The Full Comparison">
+<meta property="og:description" content="Where Query Monitor still wins, where Request Inspector adds real capability, and how to decide between them — or run both.">
+<meta property="og:url" content="https://requestinspector.netlify.app/blog-request-inspector-vs-query-monitor.html">
+<meta property="og:image" content="https://requestinspector.netlify.app/assets/img/og-image.png">
+<meta property="article:author" content="Hammad Meer">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/logo.png" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0B1B2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "WordPress Request Inspector vs. Query Monitor: The Full Comparison",
+  "description": "A detailed, honest comparison of WordPress Request Inspector and Query Monitor for WordPress debugging and performance profiling.",
+  "author": {"@type": "Person", "name": "Hammad Meer", "url": "https://requestinspector.netlify.app/developer.html"},
+  "publisher": {"@type": "Organization", "name": "WordPress Request Inspector", "logo": {"@type":"ImageObject","url":"https://requestinspector.netlify.app/assets/img/icon-512.png"}},
+  "datePublished": "2026-08-20",
+  "dateModified": "2026-09-10",
+  "mainEntityOfPage": "https://requestinspector.netlify.app/blog-request-inspector-vs-query-monitor.html",
+  "image": "https://requestinspector.netlify.app/assets/img/og-image.png"
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="utility-bar"><div class="container">
+  <span class="breadcrumb"><a href="index.html">requestinspector.netlify.app</a> / <a href="blog.html">Blog</a> / <b>vs. Query Monitor</b></span>
+  <div class="util-right"><span class="recording-pill"><span class="pulse-dot"></span> Recording: ON</span><a href="docs.html">Docs</a></div>
+</div></div>
+<header class="site-header"><div class="container nav-row">
+  <a href="index.html" class="brand"><img src="assets/img/logo.png" alt="" class="brand-mark" width="36" height="36"><span>Request Inspector<br><small>by Hammad Meer</small></span></a>
+  <nav class="main-nav" aria-label="Primary"><a href="features.html">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html" class="active">Blog</a><a href="changelog.html">Changelog</a><a href="developer.html">Developer</a></nav>
+  <div class="nav-cta"><a href="contact.html" class="btn btn-ghost btn-sm">Contact</a><a href="download.html" class="btn btn-primary btn-sm">Get the plugin</a><button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button></div>
+</div>
+<nav class="mobile-nav" aria-label="Mobile"><a href="features.html">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html">Blog</a><a href="changelog.html">Changelog</a><a href="developer.html">Developer</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container-narrow">
+      <span class="eyebrow"><span class="dot"></span> Comparison</span>
+      <h1>WordPress Request Inspector vs. Query Monitor: the full comparison</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow prose">
+      <div class="byline">
+        <div class="byline-avatar">HM</div>
+        <div><b>Hammad Meer</b><span>Published Aug 20, 2026 · Updated Sep 10, 2026 · 12 min read</span></div>
+      </div>
+
+      <p>Query Monitor has been the default WordPress debugging plugin for years, and for good reason — it's fast, thorough, and free. So the honest question isn't "which one is better," it's <strong>"which gaps does each one leave, and does that matter for what you're doing?"</strong> This is a straight comparison, including the places Query Monitor still wins.</p>
+
+      <h2>The short version</h2>
+      <p>Query Monitor is excellent at showing you <em>WordPress's internal execution</em> — hooks, queries, conditionals, template files. What it doesn't show you is the actual <strong>HTTP request and response</strong> — the JSON body a REST endpoint received or returned, formatted and readable, the way a browser's network tab would show it. That's the specific gap Request Inspector was built to close, alongside a full request/response redaction layer and a DevTools-style waterfall.</p>
+
+      <h2>Feature-by-feature</h2>
+      <div class="compare-wrap">
+        <table class="compare">
+          <thead><tr><th>Capability</th><th class="hl">Request Inspector</th><th>Query Monitor</th></tr></thead>
+          <tbody>
+            <tr><th>Full request &amp; response body viewer (formatted JSON)</th><td class="yes">Yes</td><td class="no">No</td></tr>
+            <tr><th>SQL query profiling with duration &amp; caller</th><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><th>EXPLAIN analysis per query</th><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><th>Duplicate-query grouping</th><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><th>Hook / callback execution tracing</th><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+            <tr><th>Chrome DevTools-style waterfall/Gantt timeline</th><td class="yes">Yes</td><td class="partial">Basic timing panel</td></tr>
+            <tr><th>PHP error inspector with source snippet + backtrace</th><td class="yes">Yes</td><td class="partial">Errors listed, less context</td></tr>
+            <tr><th>Built-in secret redaction (tokens, cookies, passwords)</th><td class="yes">Yes</td><td class="no">No</td></tr>
+            <tr><th>IP allowlist + capability gating</th><td class="yes">Yes</td><td class="partial">Capability only</td></tr>
+            <tr><th>Immutable audit log</th><td class="yes">Yes</td><td class="no">No</td></tr>
+            <tr><th>Configurable sampling / retention for production use</th><td class="yes">Yes</td><td class="no">No — request-scoped only</td></tr>
+            <tr><th>Zero setup, always-on, minimal footprint</th><td class="partial">Slightly heavier by design (persistent storage)</td><td class="yes">Yes — extremely lightweight</td></tr>
+            <tr><th>Maturity &amp; install base</th><td class="partial">New, actively developed</td><td class="yes">Long-established, huge install base</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:.82rem;color:var(--muted-2);">Feature comparison based on Request Inspector v0.10.2 and Query Monitor's publicly documented feature set as of September 2026. Query Monitor's own capabilities may evolve — always check its current changelog.</p>
+
+      <h2>Where Query Monitor still wins</h2>
+      <p>Query Monitor is deliberately request-scoped and lightweight: nothing persists after the page loads, so there's effectively zero configuration and no storage to manage. If you just want a fast "what happened on this one page load" panel while actively coding, that simplicity is a real advantage, and its install base means almost every WordPress developer already knows its UI.</p>
+
+      <h2>Where Request Inspector adds capability</h2>
+      <h3>1. The response body is not an afterthought</h3>
+      <p>When you're debugging a REST endpoint or an external API integration, the actual JSON that came back matters as much as which queries ran. Request Inspector's Response tab shows formatted, syntax-highlighted request and response bodies with headers, byte counts, and a "Save as Fixture" action — closer to a browser's network tab than a WordPress debug bar.</p>
+
+      <h3>2. A real timeline, not just totals</h3>
+      <p>The Timeline tab draws a millisecond-accurate Gantt chart across the WordPress lifecycle — <code class="mono">muplugins_loaded</code> through <code class="mono">shutdown</code> — with zoom controls and the ability to click a phase and jump straight into the Database or Hooks tab for that slice of time. That's a materially different way of finding "where did 300ms go" than reading a flat list of totals.</p>
+
+      <h3>3. Redaction is the default, not a manual step</h3>
+      <p>Because Request Inspector persists data (even briefly), it treats redaction as a first-class requirement: Authorization headers, passwords, tokens, cookies and nonces are masked in memory before anything is written to storage. Query Monitor, being request-scoped and non-persistent, doesn't need this in the same way — but it also doesn't give you the option to keep history for later comparison.</p>
+
+      <h3>4. Built for handing off to someone else</h3>
+      <p>An IP allowlist, a <code class="mono">manage_options</code> capability gate, and an immutable audit log mean an agency can safely enable it on a client's production site, gate exactly who can see captured data, and prove who looked at what — much closer to what enterprise DevOps teams expect from a profiling tool.</p>
+
+      <h2>Can you run both?</h2>
+      <p>Yes. They don't conflict — Query Monitor still gives you the fast, disposable per-page-load panel, while Request Inspector's stored history means you can compare a slow request against yesterday's baseline, or capture an intermittent bug you can't reproduce on demand.</p>
+
+      <h2>How to decide</h2>
+      <div class="callout">
+        <strong>Choose Query Monitor</strong> if you want the lightest possible always-on debug bar for active local development, with no persistence to manage.<br><br>
+        <strong>Add Request Inspector</strong> if you need to see actual request/response payloads, want a waterfall view of a full page lifecycle, need to profile safely on staging or production with redaction and access control, or want to hand a captured request to a teammate instead of describing it from memory.
+      </div>
+
+      <div class="divider"></div>
+      <div class="text-center">
+        <a href="download.html" class="btn btn-primary">Install Request Inspector</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="brand" style="color:#fff;"><img src="assets/img/logo.png" alt="" width="36" height="36"><span>Request Inspector</span></a><p>A native wp-admin observability suite for tracing requests, queries, hooks and PHP errors — without an external APM.</p></div>
+      <div class="footer-col"><h4>Product</h4><ul><li><a href="features.html">Features</a></li><li><a href="security.html">Security &amp; redaction</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="download.html">Download</a></li></ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul><li><a href="docs.html">Documentation</a></li><li><a href="blog.html">Blog</a></li><li><a href="blog-request-inspector-vs-query-monitor.html">vs. Query Monitor</a></li><li><a href="/docs.html#faq">FAQ</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="developer.html">Developer</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year"></span> WordPress Request Inspector. Released under the GPLv2 (or later) license.</span><span class="credit">Made with <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.9-10-9.1C.4 8.6 2 5 5.6 5c2 0 3.3 1 4.4 2.4C11.1 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.9 19.5 16.1 12 21 12 21z"/></svg> by <a href="developer.html">Hammad Meer</a></span></div>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
