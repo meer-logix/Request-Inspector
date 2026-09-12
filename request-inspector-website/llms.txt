@@ -1,0 +1,37 @@
+# WordPress Request Inspector
+
+> A native wp-admin debugging and observability plugin for WordPress. It traces HTTP requests, database queries, WordPress hook execution, outbound HTTP calls, and PHP errors in a single Chrome DevTools-style panel, with under 2ms of tracing overhead per request and built-in redaction of secrets (bearer tokens, passwords, cookies, nonces).
+
+Developer: Hammad Meer (MERN Stack & Full-Stack Web Developer). Personal site: https://hammadmeer.netlify.app
+License: GPLv2 or later. Free and self-hosted — no data leaves the WordPress installation it's running on.
+Current version: 0.10.2
+
+## What it does
+- Request Explorer: logs every REST call, AJAX action, cron run, WP-CLI command and front-end render with method, route, status, duration, and payload size.
+- Response Inspector: full request/response body viewer with formatted JSON, headers, and redaction badges.
+- Database Inspector: per-query duration, duplicate-query grouping, EXPLAIN analysis, and caller backtrace.
+- Hooks Inspector: do_action()/apply_filters() execution order, priority, and per-callback timing with slow-callback flags.
+- PHP/Error Inspector: fatals, warnings, deprecations and notices with source snippet and 5-frame backtrace.
+- Timeline/Waterfall: millisecond Gantt chart of the WordPress lifecycle (muplugins_loaded through shutdown).
+- Security & Redaction: in-memory secret masking, manage_options capability gate, IP allowlist, immutable audit log.
+
+## How it compares to Query Monitor
+Query Monitor is a mature, request-scoped, non-persistent WordPress debug bar strong at hooks and query introspection. WordPress Request Inspector adds a full request/response body viewer, a DevTools-style waterfall timeline, built-in secret redaction, configurable retention/sampling for safe production use, an IP allowlist, and an audit log. The two are not mutually exclusive and can run together. Full comparison: /blog-request-inspector-vs-query-monitor.html
+
+## Key pages
+- Home: /
+- Features: /features.html
+- Security & redaction model: /security.html
+- Documentation & FAQ: /docs.html
+- Changelog: /changelog.html
+- Download: /download.html
+- Blog: /blog.html
+- About: /about.html
+- Developer profile (Hammad Meer): /developer.html
+- Contact: /contact.html
+
+## Non-functional facts (for citation)
+- Tracing overhead: under 2.0ms per request (benchmarked ~1.82ms/req)
+- Default retention: 14 days, 250MB / 50,000 record storage cap, FIFO-pruned via wp-cron
+- Supported WordPress: 6.0+; Supported PHP: 8.0–8.3; Tested against MySQL 8.0.x
+- Redaction defaults cover: Authorization, password, token, api_key, secret, client_secret, Cookie, Set-Cookie, nonce

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Practical Method for Debugging Slow WordPress Requests</title>
+<meta name="description" content="A repeatable process for tracking down TTFB regressions in WordPress — from the Timeline tab down to the exact slow query or hook callback.">
+<link rel="canonical" href="https://requestinspector.netlify.app/blog-debugging-slow-wordpress-requests.html">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Hammad Meer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Practical Method for Debugging Slow WordPress Requests">
+<meta property="og:description" content="A repeatable process for tracking down TTFB regressions in WordPress, from the Timeline tab down to the exact query or callback.">
+<meta property="og:url" content="https://requestinspector.netlify.app/blog-debugging-slow-wordpress-requests.html">
+<meta property="og:image" content="https://requestinspector.netlify.app/assets/img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/logo.png" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0B1B2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "A Practical Method for Debugging Slow WordPress Requests",
+  "author": {"@type": "Person", "name": "Hammad Meer", "url": "https://requestinspector.netlify.app/developer.html"},
+  "publisher": {"@type": "Organization", "name": "WordPress Request Inspector", "logo": {"@type":"ImageObject","url":"https://requestinspector.netlify.app/assets/img/icon-512.png"}},
+  "datePublished": "2026-08-28",
+  "dateModified": "2026-08-28",
+  "mainEntityOfPage": "https://requestinspector.netlify.app/blog-debugging-slow-wordpress-requests.html",
+  "image": "https://requestinspector.netlify.app/assets/img/og-image.png"
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="utility-bar"><div class="container">
+  <span class="breadcrumb"><a href="index.html">requestinspector.netlify.app</a> / <a href="blog.html">Blog</a> / <b>Debugging slow requests</b></span>
+  <div class="util-right"><span class="recording-pill"><span class="pulse-dot"></span> Recording: ON</span><a href="docs.html">Docs</a></div>
+</div></div>
+<header class="site-header"><div class="container nav-row">
+  <a href="index.html" class="brand"><img src="assets/img/logo.png" alt="" class="brand-mark" width="36" height="36"><span>Request Inspector<br><small>by Hammad Meer</small></span></a>
+  <nav class="main-nav" aria-label="Primary"><a href="features.html">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html" class="active">Blog</a><a href="changelog.html">Changelog</a><a href="developer.html">Developer</a></nav>
+  <div class="nav-cta"><a href="contact.html" class="btn btn-ghost btn-sm">Contact</a><a href="download.html" class="btn btn-primary btn-sm">Get the plugin</a><button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button></div>
+</div>
+<nav class="mobile-nav" aria-label="Mobile"><a href="features.html">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html">Blog</a><a href="changelog.html">Changelog</a><a href="developer.html">Developer</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container-narrow">
+      <span class="eyebrow"><span class="dot"></span> Guide</span>
+      <h1>A practical method for debugging slow WordPress requests</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-narrow prose">
+      <div class="byline"><div class="byline-avatar">HM</div><div><b>Hammad Meer</b><span>Published Aug 28, 2026 · 9 min read</span></div></div>
+
+      <p>"The site feels slow" is not a debugging starting point — it's a symptom. Here's the process I use to go from that vague complaint to an actual root cause, using the Timeline, Database and Hooks tabs together instead of guessing.</p>
+
+      <h2>Step 1: Reproduce it inside a captured request</h2>
+      <p>Turn recording on, set sampling to <strong>100% capture</strong> temporarily (switch back to "slow &amp; errors only" once you're done), and reproduce the slow page load or API call. You want one specific request row in the Explorer to anchor the rest of the investigation — not an average.</p>
+
+      <h2>Step 2: Start at the Timeline tab, not the Database tab</h2>
+      <p>It's tempting to jump straight to SQL, but most regressions are lifecycle-shaped, not query-shaped. Open the Timeline tab and look at which phase — <code class="mono">plugins_loaded</code>, <code class="mono">init</code>, <code class="mono">rest_api_init</code>, <code class="mono">template_redirect</code> — is disproportionately large relative to the others.</p>
+      <div class="callout">A healthy request usually has one dominant phase relative to page complexity. If two unrelated phases are both unusually large, you likely have two separate problems, not one.</div>
+
+      <h2>Step 3: Deep-link into the slow phase</h2>
+      <p>Click the oversized segment. Request Inspector surfaces "Jump to Database Tab" and "View Caller Backtrace" links scoped to just that phase — so instead of scanning all 214 queries for the whole request, you're looking at the dozen that ran during <code class="mono">rest_api_init</code> specifically.</p>
+
+      <h2>Step 4: Check for duplicates before chasing duration</h2>
+      <p>In the Database tab, sort by duration, but glance at the duplicate-query badges first. A query that runs in 4ms but fires 40 times inside a loop often costs more, in aggregate, than a single 180ms query — and is usually a cheaper fix (add a cache, hoist the query out of the loop).</p>
+      <div class="code-block"><span class="c-comment">// Duplicate query pattern — usually a loop problem</span>
+foreach ( $product_ids <span class="c-key">as</span> $id ) {
+    $meta = get_post_meta( $id, <span class="c-str">'_price'</span>, true ); <span class="c-comment">// N+1</span>
+}
+<span class="c-comment">// Fix: prime the cache once</span>
+update_meta_cache( <span class="c-str">'post'</span>, $product_ids );</div>
+
+      <h2>Step 5: If it's not the database, check Hooks</h2>
+      <p>If query time looks normal but the phase is still slow, open the Hooks tab filtered to that lifecycle stage. Look for callbacks flagged amber (&gt;5ms) or red (&gt;20ms) — third-party plugins doing synchronous HTTP calls or heavy computation inside a hook are a common culprit here, and the inline backtrace tells you exactly which plugin to report the issue to.</p>
+
+      <h2>Step 6: Check the HTTP API tab for outbound calls</h2>
+      <p>External API calls — payment gateways, analytics, license checks — routinely hide inside <code class="mono">init</code> or <code class="mono">wp_loaded</code> and block the response. The HTTP API tab lists every outbound <code class="mono">wp_remote_*</code> call with duration, so a slow third-party endpoint is visible instead of masquerading as "WordPress is slow."</p>
+
+      <h2>Step 7: Confirm the fix with a second capture</h2>
+      <p>After the fix, reproduce the same request again and compare the new Timeline against the original. Because both are stored, you can view them side by side rather than trusting memory of "it feels faster now."</p>
+
+      <h2>A short checklist</h2>
+      <ul>
+        <li>Reproduce inside one captured request, not an aggregate.</li>
+        <li>Start at the Timeline tab to find the disproportionate phase.</li>
+        <li>Deep-link from that phase into Database or Hooks — don't scan everything.</li>
+        <li>Check duplicate-query badges before chasing single-query duration.</li>
+        <li>Check the HTTP API tab for blocking outbound calls.</li>
+        <li>Re-capture after the fix and compare against the original.</li>
+      </ul>
+
+      <div class="divider"></div>
+      <div class="text-center"><a href="download.html" class="btn btn-primary">Install Request Inspector</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="brand" style="color:#fff;"><img src="assets/img/logo.png" alt="" width="36" height="36"><span>Request Inspector</span></a><p>A native wp-admin observability suite for tracing requests, queries, hooks and PHP errors — without an external APM.</p></div>
+      <div class="footer-col"><h4>Product</h4><ul><li><a href="features.html">Features</a></li><li><a href="security.html">Security &amp; redaction</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="download.html">Download</a></li></ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul><li><a href="docs.html">Documentation</a></li><li><a href="blog.html">Blog</a></li><li><a href="blog-request-inspector-vs-query-monitor.html">vs. Query Monitor</a></li><li><a href="/docs.html#faq">FAQ</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="developer.html">Developer</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year"></span> WordPress Request Inspector. Released under the GPLv2 (or later) license.</span><span class="credit">Made with <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.9-10-9.1C.4 8.6 2 5 5.6 5c2 0 3.3 1 4.4 2.4C11.1 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.9 19.5 16.1 12 21 12 21z"/></svg> by <a href="developer.html">Hammad Meer</a></span></div>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

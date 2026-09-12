@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ruleset name="Request Inspector">
+ <description>WordPress plugin standards.</description>
+ <file>request-inspector</file>
+ <exclude-pattern>*/admin/*</exclude-pattern>
+ <arg name="extensions" value="php"/>
+ <arg name="parallel" value="4"/>
+ <rule ref="WordPress"/>
+ <rule ref="WordPress.WP.I18n"><properties><property name="text_domain" type="array"><element value="request-inspector"/></property></properties></rule>
+ <config name="testVersion" value="8.1-"/>
+ <rule ref="PHPCompatibilityWP"/>
+</ruleset>

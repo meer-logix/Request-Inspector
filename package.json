@@ -1,0 +1,25 @@
+{
+  "name": "request-inspector-development",
+  "private": true,
+  "version": "0.10.2",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "build": "wp-scripts build --config=request-inspector/admin/webpack.config.js --webpack-src-dir=request-inspector/admin/src --output-path=request-inspector/admin/build",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "playwright test",
+    "package": "node scripts/package.mjs"
+  },
+  "devDependencies": {
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@playwright/test": "^1.55.0",
+    "@types/react": "^18.3.0",
+    "@wordpress/scripts": "^30.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@wordpress/api-fetch": "^7.0.0",
+    "@wordpress/element": "^6.0.0",
+    "@wordpress/i18n": "^6.0.0"
+  }
+}

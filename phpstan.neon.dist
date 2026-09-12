@@ -1,0 +1,9 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+parameters:
+    level: 5
+    treatPhpDocTypesAsCertain: false
+    paths:
+        - request-inspector/includes
+    bootstrapFiles:
+        - tests/constants.php

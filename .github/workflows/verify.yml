@@ -1,0 +1,41 @@
+name: Verify plugin
+on: [push, pull_request]
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb:10.6
+        env:
+          MARIADB_ROOT_PASSWORD: ri_test_only
+        ports: ['19306:3306']
+        options: --health-cmd="healthcheck.sh --connect --innodb_initialized" --health-interval=10s --health-timeout=5s --health-retries=10
+    strategy:
+      matrix:
+        wordpress: ['6.6', '7.1']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mysqli, mbstring, curl, zip
+          tools: composer
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - run: composer install --no-interaction --prefer-dist
+      - run: npm ci && npm run typecheck && npm run build
+      - name: Prepare isolated WordPress
+        run: |
+          mkdir -p .runtime
+          curl --fail --location "https://wordpress.org/wordpress-${{ matrix.wordpress }}.zip" -o .runtime/wordpress.zip
+          unzip -q .runtime/wordpress.zip -d .runtime
+          mkdir -p .runtime/wordpress/wp-content/plugins
+          ln -s "$GITHUB_WORKSPACE/request-inspector" .runtime/wordpress/wp-content/plugins/request-inspector
+          php scripts/setup-test.php
+          php -S 127.0.0.1:18881 tests/http-fixture.php >/tmp/ri-fixture.log 2>&1 &
+      - run: vendor/bin/phpunit
+      - run: vendor/bin/phpcs --parallel=1
+      - run: vendor/bin/phpstan analyse --no-progress --memory-limit=2G
+      - run: php tests/integration.php

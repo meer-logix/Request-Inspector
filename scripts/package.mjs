@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+import {execFileSync} from 'node:child_process';
+const pkg=JSON.parse(fs.readFileSync('package.json','utf8'));
+pkg.version='0.10.2';
+fs.writeFileSync('package.json',JSON.stringify(pkg,null,2)+'\n');
+const lock=JSON.parse(fs.readFileSync('package-lock.json','utf8'));lock.version=pkg.version;lock.packages[''].version=pkg.version;
+fs.writeFileSync('package-lock.json',JSON.stringify(lock,null,2)+'\n');
+const sourcePkg={...pkg,scripts:{build:'wp-scripts build --config=webpack.config.js --webpack-src-dir=src --output-path=build',typecheck:'tsc --noEmit'}};
+fs.writeFileSync('request-inspector/admin/package.json',JSON.stringify(sourcePkg,null,2)+'\n');
+fs.writeFileSync('request-inspector/admin/package-lock.json',JSON.stringify(lock,null,2)+'\n');
+const ts=JSON.parse(fs.readFileSync('tsconfig.json','utf8'));ts.include=['src/**/*'];
+fs.writeFileSync('request-inspector/admin/tsconfig.json',JSON.stringify(ts,null,2)+'\n');
+execFileSync('rtk',['proxy','php','-c','.runtime/php.ini','scripts/package.php'],{stdio:'inherit',windowsHide:true});

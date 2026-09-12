@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Features — Request Explorer, Database, Hooks, PHP &amp; Timeline Inspector | WordPress Request Inspector</title>
+<meta name="description" content="A full tour of WordPress Request Inspector: the Request Explorer, Response Inspector, Database profiler with EXPLAIN, Hooks tracer, PHP/Error inspector, and the millisecond Timeline waterfall.">
+<link rel="canonical" href="https://requestinspector.netlify.app/features.html">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Features — WordPress Request Inspector">
+<meta property="og:description" content="Request Explorer, Database profiler, Hooks tracer, PHP/Error inspector and a millisecond Timeline waterfall — all native to wp-admin.">
+<meta property="og:url" content="https://requestinspector.netlify.app/features.html">
+<meta property="og:image" content="https://requestinspector.netlify.app/assets/img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/img/favicon.ico" sizes="any">
+<link rel="icon" href="assets/img/logo.png" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0B1B2E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://requestinspector.netlify.app/"},
+    {"@type":"ListItem","position":2,"name":"Features","item":"https://requestinspector.netlify.app/features.html"}
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="utility-bar"><div class="container">
+  <span class="breadcrumb"><a href="index.html">requestinspector.netlify.app</a> / <b>Features</b></span>
+  <div class="util-right"><span class="recording-pill"><span class="pulse-dot"></span> Recording: ON</span><span class="env-tag">WP 6.4+ · PHP 8.0–8.3</span><a href="docs.html">Docs</a></div>
+</div></div>
+<header class="site-header"><div class="container nav-row">
+  <a href="index.html" class="brand"><img src="assets/img/logo.png" alt="" class="brand-mark" width="36" height="36"><span>Request Inspector<br><small>by Hammad Meer</small></span></a>
+  <nav class="main-nav" aria-label="Primary">
+    <a href="features.html" class="active">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html">Blog</a><a href="changelog.html">Changelog</a><a href="developer.html">Developer</a>
+  </nav>
+  <div class="nav-cta"><a href="contact.html" class="btn btn-ghost btn-sm">Contact</a><a href="download.html" class="btn btn-primary btn-sm">Get the plugin</a><button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button></div>
+</div>
+<nav class="mobile-nav" aria-label="Mobile"><a href="features.html">Features</a><a href="security.html">Security</a><a href="docs.html">Docs</a><a href="blog.html">Blog</a><a href="changelog.html">Changelog</a><a href="developer.html">Developer</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow"><span class="dot"></span> Product tour</span>
+      <h1>Every tab tells you something different.</h1>
+      <p>Request Inspector opens a single request into nine focused tabs — Overview, Request, Response, Headers, Database, Hooks, HTTP API, PHP and Timeline — so you never have to reconstruct what happened from separate tools.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-2" style="align-items:start;">
+        <div>
+          <span class="badge-soft">01 · Request Explorer</span>
+          <h2 style="margin-top:14px;">The dashboard that catches everything.</h2>
+          <p style="margin-top:12px;">Every REST call, AJAX action, cron run, WP-CLI invocation and front-end page render is logged automatically, the moment recording is on. Four KPI cards keep the big picture visible — total requests, slowest requests, failed requests, and external API failures — while a dense, filterable table gives you method, route, status, duration, payload size and initiating component at a glance.</p>
+          <ul class="checklist">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m20 6-11 11L4 12"/></svg> Filter by method, status range, component, request type, or duration threshold</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m20 6-11 11L4 12"/></svg> Click any row to open the full 9-tab inspector or a split view</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m20 6-11 11L4 12"/></svg> Global regex search across URLs, actions and SQL patterns from the top bar</li>
+          </ul>
+        </div>
+        <div class="dark-card">
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;">
+            <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:12px;"><span style="font-size:.68rem;color:#8FA1BA;">Total requests</span><div style="font-family:var(--font-mono);font-size:1.3rem;color:#fff;">1,248</div></div>
+            <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:12px;"><span style="font-size:.68rem;color:#8FA1BA;">Slowest</span><div style="font-family:var(--font-mono);font-size:1.3rem;color:#F7BF54;">12</div></div>
+            <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:12px;"><span style="font-size:.68rem;color:#8FA1BA;">Failed</span><div style="font-family:var(--font-mono);font-size:1.3rem;color:#D64545;">5</div></div>
+            <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:12px;"><span style="font-size:.68rem;color:#8FA1BA;">External failures</span><div style="font-family:var(--font-mono);font-size:1.3rem;color:#47BEFE;">2</div></div>
+          </div>
+          <div class="req-row" style="background:rgba(255,255,255,.03);"><span class="method get">GET</span><span class="req-url">/wp-json/wp/v2/pages</span><span class="status s2">200</span><span class="dur">44ms</span></div>
+          <div class="req-row" style="background:rgba(255,255,255,.03);margin-top:6px;"><span class="method post">POST</span><span class="req-url">/wp-admin/admin-ajax.php</span><span class="status s2">200</span><span class="dur slow">301ms</span></div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="grid-2" style="align-items:start;">
+        <div class="dark-card" style="order:2;">
+          <div style="font-family:var(--font-mono);font-size:.72rem;color:#8FA1BA;margin-bottom:10px;">POST https://api.example.com/wp-json/analytify/v1/report</div>
+          <div style="display:flex;gap:16px;font-family:var(--font-mono);font-size:.72rem;color:#C9D6E6;margin-bottom:14px;">
+            <span>Status <b style="color:#2FAE60;">200 OK</b></span><span>Duration <b>342ms</b></span><span>Size <b>18.4 KB</b></span><span>Peak mem <b>4.8 MB</b></span>
+          </div>
+          <div class="panel-json">{
+  <span class="k">"component"</span>: <span class="s">"analytify/core/reporter.php"</span>,
+  <span class="k">"class"</span>: <span class="s">"Analytify_Reporter"</span>,
+  <span class="k">"method"</span>: <span class="s">"send()"</span>,
+  <span class="k">"line"</span>: <span class="n">88</span>,
+  <span class="k">"db_queries"</span>: <span class="n">214</span>,
+  <span class="k">"hooks_fired"</span>: <span class="n">1893</span>
+}</div>
+        </div>
+        <div style="order:1;">
+          <span class="badge-soft">02 · Overview tab</span>
+          <h2 style="margin-top:14px;">Know the "who" before the "what".</h2>
+          <p style="margin-top:12px;">The Overview tab opens with an initiator card — which plugin, theme or core file triggered this request, down to the class, method and line number — plus a full call backtrace. Related events (queries, hooks, notices) appear as clickable chips that jump straight into the matching tab.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="grid-2" style="align-items:start;">
+        <div>
+          <span class="badge-soft">03 · Response Inspector</span>
+          <h2 style="margin-top:14px;">The part most debuggers skip: the response itself.</h2>
+          <p style="margin-top:12px;">Switch between request body and response body, inspect headers in a monospace key-value table, and read the payload in a syntax-highlighted JSON viewer with line numbers, byte counters, and formatted/raw toggles. One click to copy JSON or save it as a fixture for a test.</p>
+          <ul class="checklist">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m20 6-11 11L4 12"/></svg> Authorization and bearer tokens shown masked, with a redaction badge</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m20 6-11 11L4 12"/></svg> "Save as Fixture" turns a real response into a reusable test payload</li>
+          </ul>
+        </div>
+        <div class="dark-card">
+          <div class="panel-tabs" style="padding:0 0 10px;"><span class="on">Response</span><span>Request</span><span>Headers</span></div>
+          <div class="panel-json">{
+  <span class="k">"Authorization"</span>: <span class="muted-tok">"Bearer ████████████"</span>,
+  <span class="k">"Content-Type"</span>: <span class="s">"application/json"</span>,
+  <span class="k">"data"</span>: {
+    <span class="k">"id"</span>: <span class="n">482</span>,
+    <span class="k">"status"</span>: <span class="s">"published"</span>
+  }
+}</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="grid-2" style="align-items:start;">
+        <div class="dark-card" style="order:2;">
+          <table class="mini-table">
+            <thead><tr><th>Hook</th><th>Callback</th><th>Priority</th><th>Time</th></tr></thead>
+            <tbody>
+              <tr><td>init</td><td>wc_load_cart()</td><td>10</td><td>2ms</td></tr>
+              <tr><td>rest_api_init</td><td>register_analytify_routes()</td><td>10</td><td style="color:#F7BF54">7ms</td></tr>
+              <tr><td>rest_pre_dispatch</td><td>check_rate_limit()</td><td>5</td><td style="color:#D64545">24ms</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="order:1;">
+          <span class="badge-soft">04 · Hooks Inspector</span>
+          <h2 style="margin-top:14px;">Actions and filters, in the order WordPress actually ran them.</h2>
+          <p style="margin-top:12px;">A segmented view separates <code class="mono">do_action()</code> from <code class="mono">apply_filters()</code>, grouped by lifecycle stage, with priority, accepted-argument count, and execution time per callback. Callbacks over 5ms are flagged amber; over 20ms, red — with an inline backtrace for each.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="grid-2" style="align-items:start;">
+        <div>
+          <span class="badge-soft">05 · PHP / Error Inspector</span>
+          <h2 style="margin-top:14px;">The error, the code around it, and how you got there.</h2>
+          <p style="margin-top:12px;">Fatal errors, warnings, deprecations and notices are grouped by severity with a live count, filterable by component. Expand any one to see 5–7 lines of the surrounding PHP source with the offending line highlighted, plus a five-frame backtrace with memory delta and parameter signatures per frame.</p>
+        </div>
+        <div class="dark-card">
+          <div class="code-block" style="margin:0;">
+<span class="c-comment">// includes/class-wc-ajax.php:412</span>
+409  $items = $cart->get_items();
+410  foreach ( $items as $item ) {
+411      $price = $item->get_price();
+<span style="background:rgba(214,69,69,.18);display:block;">412      <span class="c-key">$total</span> += $price->format(); <span class="c-comment">// ← Fatal</span></span>
+413  }
+414  return $total;
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="grid-2" style="align-items:start;">
+        <div class="dark-card" style="order:2;">
+          <div class="waterfall-row"><span class="wf-label">muplugins_loaded</span><div class="wf-track"><div class="wf-fill" style="width:8%;background:#47BEFE"></div></div></div>
+          <div class="waterfall-row"><span class="wf-label">plugins_loaded</span><div class="wf-track"><div class="wf-fill" style="width:22%;background:#0F62A8"></div></div></div>
+          <div class="waterfall-row"><span class="wf-label">init</span><div class="wf-track"><div class="wf-fill" style="width:34%;background:#0F3D6E"></div></div></div>
+          <div class="waterfall-row"><span class="wf-label">rest_api_init</span><div class="wf-track"><div class="wf-fill" style="width:71%;background:#F7BF54"></div></div></div>
+          <div class="waterfall-row"><span class="wf-label">rest_pre_dispatch</span><div class="wf-track"><div class="wf-fill" style="width:40%;background:#47BEFE"></div></div></div>
+          <div class="waterfall-row"><span class="wf-label">shutdown</span><div class="wf-track"><div class="wf-fill" style="width:10%;background:#2FAE60"></div></div></div>
+        </div>
+        <div style="order:1;">
+          <span class="badge-soft">06 · Timeline / Waterfall</span>
+          <h2 style="margin-top:14px;">The full lifecycle, drawn like a network waterfall.</h2>
+          <p style="margin-top:12px;">A millisecond ruler with zoom controls (1x, 2x, 5x, Fit) and layer toggles for DB queries, hooks and external HTTP calls. Click any phase to see its start offset, net duration, and jump directly into the Database or Hooks tab for that slice of time.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container-narrow">
+      <h2>See your own requests, not a demo.</h2>
+      <p>Install Request Inspector and everything above is populated from your actual site within a minute.</p>
+      <div class="hero-actions" style="justify-content:center;">
+        <a href="download.html" class="btn btn-primary">Install the plugin</a>
+        <a href="security.html" class="btn btn-on-dark">Read the security model</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand"><a href="index.html" class="brand" style="color:#fff;"><img src="assets/img/logo.png" alt="" width="36" height="36"><span>Request Inspector</span></a><p>A native wp-admin observability suite for tracing requests, queries, hooks and PHP errors — without an external APM.</p></div>
+      <div class="footer-col"><h4>Product</h4><ul><li><a href="features.html">Features</a></li><li><a href="security.html">Security &amp; redaction</a></li><li><a href="changelog.html">Changelog</a></li><li><a href="download.html">Download</a></li></ul></div>
+      <div class="footer-col"><h4>Resources</h4><ul><li><a href="docs.html">Documentation</a></li><li><a href="blog.html">Blog</a></li><li><a href="blog-request-inspector-vs-query-monitor.html">vs. Query Monitor</a></li><li><a href="/docs.html#faq">FAQ</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="developer.html">Developer</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year"></span> WordPress Request Inspector. Released under the GPLv2 (or later) license.</span><span class="credit">Made with <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.9-10-9.1C.4 8.6 2 5 5.6 5c2 0 3.3 1 4.4 2.4C11.1 6 12.4 5 14.4 5 18 5 19.6 8.6 22 11.9 19.5 16.1 12 21 12 21z"/></svg> by <a href="developer.html">Hammad Meer</a></span></div>
+  </div>
+</footer>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

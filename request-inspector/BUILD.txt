@@ -1,0 +1,13 @@
+# Build and licensing
+
+Copyright (c) 2026 Hammad Farooq Meer.
+
+Request Inspector is free software under GPL-2.0-or-later. You may redistribute and modify it under that license. There is no warranty. See LICENSE.txt.
+
+The admin sources live in admin/src. In the development workspace run `npm ci`, `npm run typecheck`, and `npm run build`. The build uses @wordpress/scripts with admin/webpack.config.js and externalizes WordPress runtime packages; generated dependencies are recorded in admin/build/index.asset.php and live.asset.php. Installable releases contain the Explorer, live toolbar and lazy dock JS/CSS/RTL assets. Keep the complete build directory when distributing the plugin.
+
+To rebuild directly from the release package, change into the plugin's admin directory, then run `npm ci`, `npm run typecheck`, and `npm run build`. That directory includes its package manifest, lockfile and TypeScript configuration. Node.js 20+ is required for these development tools; end users do not need Node.js or Composer.
+
+Inter and JetBrains Mono are bundled locally; see licenses/ for their SIL Open Font License notices. No remote fonts or design-export scripts are loaded.
+
+The original design documents remain in the development workspace. The supplied branding is included at the author's request. Confirm GPL-compatible redistribution rights for supplied artwork before public directory submission.

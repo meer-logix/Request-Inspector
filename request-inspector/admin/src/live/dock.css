@@ -1,0 +1,72 @@
+#ri-live-inspector-root { --rid-ink: #0b1b2e; --rid-blue: #0f62a8; --rid-border: #d8e1ea; color: var(--rid-ink); font: 13px/1.5 system-ui, sans-serif; }
+#ri-live-inspector-root * { box-sizing: border-box; }
+#ri-live-inspector-root .rid-dock { position: fixed; inset-inline: 0; bottom: 0; z-index: 99990; min-height: 240px; background: #f6f7f9; border-top: 1px solid var(--rid-border); box-shadow: 0 -6px 28px #0b1b2e26; display: flex; flex-direction: column; max-height: calc(100dvh - 48px); color: var(--rid-ink); }
+#ri-live-inspector-root .rid-dock[hidden] { display: none; }
+#ri-live-inspector-root .rid-side { inset-inline-start: auto; inset-inline-end: 0; top: 32px; height: auto; max-width: calc(100vw - 40px); }
+#ri-live-inspector-root .rid-header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 18px; background: #fff; border-bottom: 1px solid var(--rid-border); flex-shrink: 0; }
+#ri-live-inspector-root .rid-brand, #ri-live-inspector-root .rid-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+#ri-live-inspector-root h2 { font-size: 15px; margin: 0; color: var(--rid-ink); line-height: 1.4; }
+#ri-live-inspector-root h3 { font-size: 18px; margin: 0; color: var(--rid-ink); }
+#ri-live-inspector-root p { font: inherit; }
+#ri-live-inspector-root .rid-brand span, #ri-live-inspector-root .rid-description, #ri-live-inspector-root .rid-footer { font-size: 11px; color: #536477; }
+#ri-live-inspector-root .rid-layout { display: grid; grid-template-columns: 185px minmax(0,1fr); overflow: hidden; min-height: 0; flex: 1; }
+#ri-live-inspector-root nav { overflow: auto; background: #fff; border-inline-end: 1px solid var(--rid-border); padding: 8px; }
+#ri-live-inspector-root button, #ri-live-inspector-root input, #ri-live-inspector-root select { font: inherit; color: var(--rid-ink); border: 1px solid var(--rid-border); border-radius: 5px; background: #fff; min-height: 36px; padding: 6px 10px; max-width: 100%; }
+#ri-live-inspector-root button { cursor: pointer; display: inline-flex; justify-content: center; align-items: center; gap: 8px; line-height: 1.4; }
+#ri-live-inspector-root button:disabled { opacity: .5; cursor: default; }
+#ri-live-inspector-root button:hover:not(:disabled) { background: #edf5fc; }
+#ri-live-inspector-root :focus-visible { outline: 2px solid var(--rid-blue); outline-offset: 2px; }
+#ri-live-inspector-root a { color: var(--rid-blue); }
+#ri-live-inspector-root nav button { width: 100%; justify-content: space-between; border: 0; text-align: start; background: transparent; margin-bottom: 2px; font-size: 12px; }
+#ri-live-inspector-root nav button[aria-selected=true] { background: #e8f2fa; color: var(--rid-blue); font-weight: 600; }
+#ri-live-inspector-root small { font-size: 10px; font-variant-numeric: tabular-nums; }
+#ri-live-inspector-root .rid-close { font-size: 24px; width: 36px; }
+#ri-live-inspector-root .rid-content { padding: 18px 24px; overflow: auto; min-width: 0; }
+#ri-live-inspector-root .rid-panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+#ri-live-inspector-root .rid-status { padding: 3px 8px; background: #e8f2fa; border-radius: 20px; font-size: 10px; }
+#ri-live-inspector-root .rid-route { display: flex; align-items: center; gap: 12px; overflow-wrap: anywhere; padding: 10px; background: #fff; border: 1px solid var(--rid-border); border-radius: 6px; }
+#ri-live-inspector-root .rid-route > strong, #ri-live-inspector-root .rid-route > span { flex-shrink: 0; white-space: nowrap; }
+#ri-live-inspector-root .rid-route > code { flex: 1; min-width: 0; }
+#ri-live-inspector-root code { font: 11px/1.6 ui-monospace, monospace; background: none; color: inherit; overflow-wrap: anywhere; }
+#ri-live-inspector-root .ri-cards { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; margin: 16px 0; }
+#ri-live-inspector-root .ri-card { padding: 14px; background: #fff; border: 1px solid var(--rid-border); border-radius: 6px; }
+#ri-live-inspector-root .ri-card > span { display: block; color: #536477; font-size: 10px; }
+#ri-live-inspector-root .ri-card strong { display: block; margin-top: 8px; font-size: 21px; font-variant-numeric: tabular-nums; }
+#ri-live-inspector-root .ri-kv { margin: 0; }
+#ri-live-inspector-root .ri-kv > div { display: grid; grid-template-columns: minmax(100px,25%) minmax(0,1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid #e5ebf0; }
+#ri-live-inspector-root dt { color: #536477; font-size: 11px; }
+#ri-live-inspector-root dd { margin: 0; overflow-wrap: anywhere; white-space: pre-wrap; font: 11px/1.6 ui-monospace, monospace; max-height: 280px; overflow: auto; }
+#ri-live-inspector-root .rid-filters { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px; margin: 14px 0; }
+#ri-live-inspector-root label { display: flex; flex-direction: column; gap: 5px; font-size: 11px; }
+#ri-live-inspector-root .rid-check { flex-direction: row; align-items: center; min-height: 36px; }
+#ri-live-inspector-root input[type=checkbox] { min-height: 0; width: 16px; height: 16px; margin: 0; }
+#ri-live-inspector-root details { margin: 8px 0; border: 1px solid var(--rid-border); background: #fff; border-radius: 5px; }
+#ri-live-inspector-root details > .ri-kv { padding: 0 14px 14px; }
+#ri-live-inspector-root summary { cursor: pointer; display: flex; align-items: center; gap: 12px; padding: 10px 14px; }
+#ri-live-inspector-root summary::before { content: '›'; }
+#ri-live-inspector-root details[open] > summary::before { transform: rotate(90deg); }
+#ri-live-inspector-root summary code { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#ri-live-inspector-root .rid-footer { margin-top: 22px; padding-top: 12px; border-top: 1px solid var(--rid-border); }
+#ri-live-inspector-root .rid-notice { background: #fff5df; border-inline-start: 3px solid #f7bf54; padding: 10px 12px; }
+#ri-live-inspector-root .rid-error { background: #fff0ef; border-color: #d64545; }
+#ri-live-inspector-root .rid-resize { position: absolute; inset-inline: 0; top: -4px; height: 8px; cursor: ns-resize; touch-action: none; }
+#ri-live-inspector-root .rid-side .rid-resize { inset-inline-start: -4px; inset-inline-end: auto; top: 0; width: 8px; height: 100%; cursor: ew-resize; }
+#ri-live-inspector-root .rid-pagination { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+#ri-live-inspector-root table { width: 100%; border-collapse: collapse; font-size: 12px; }
+#ri-live-inspector-root th, #ri-live-inspector-root td { padding: 10px; text-align: start; border-bottom: 1px solid var(--rid-border); overflow-wrap: anywhere; }
+#ri-live-inspector-root .rid-span { display: grid; grid-template-columns: minmax(110px,35%) 1fr 70px; align-items: center; gap: 10px; padding: 4px; }
+#ri-live-inspector-root .rid-span button { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: start; font-size: 11px; }
+#ri-live-inspector-root .rid-track { position: relative; height: 24px; overflow: hidden; background: repeating-linear-gradient(90deg,transparent,transparent 24.8%,#dbe5ee 25%); }
+#ri-live-inspector-root .rid-track span { position: absolute; top: 6px; height: 12px; min-width: 2px; background: var(--rid-blue); border-radius: 2px; }
+#ri-live-inspector-root .rid-side .ri-cards { grid-template-columns: repeat(2,minmax(0,1fr)); }
+@media (max-width: 1000px) { #ri-live-inspector-root .ri-cards { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 782px) {
+  #ri-live-inspector-root .rid-mobile { inset: 0; height: 100dvh; max-height: 100dvh; z-index: 100100; }
+  #ri-live-inspector-root .rid-layout { grid-template-columns: 130px minmax(0,1fr); }
+  #ri-live-inspector-root .rid-content { padding: 12px; }
+  #ri-live-inspector-root .ri-cards { grid-template-columns: 1fr; }
+  #ri-live-inspector-root .rid-header { padding: 8px 12px; }
+  #ri-live-inspector-root button { min-height: 44px; }
+  #ri-live-inspector-root .ri-kv > div { grid-template-columns: 1fr; gap: 4px; }
+  #ri-live-inspector-root .rid-header a { display: none; }
+}
